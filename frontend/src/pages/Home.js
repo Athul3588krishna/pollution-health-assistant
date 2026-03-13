@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { pollutionAPI, healthAPI, authAPI, aiAPI } from '../services/api';
 import { FaSearch, FaUser, FaWind, FaThermometerHalf, FaTint, FaCrosshairs } from 'react-icons/fa';
+import Chatbot from '../components/Chatbot';
+
 
 function Home({ currentUser, onUserUpdate }) {
   const [city, setCity] = useState('');
@@ -356,7 +358,7 @@ function Home({ currentUser, onUserUpdate }) {
               </ul>
             </div>
 
-            {results.healthRisk.suggestedMedicines && results.healthRisk.suggestedMedicines.length > 0 && (
+                        {results.healthRisk.suggestedMedicines && results.healthRisk.suggestedMedicines.length > 0 && (
               <div className="medicines">
                 <h3>Suggested Medicines</h3>
                 <ul>
@@ -366,9 +368,14 @@ function Home({ currentUser, onUserUpdate }) {
                 </ul>
               </div>
             )}
+
           </div>
         </div>
       )}
+
+      {/* Chatbot */}
+      <Chatbot />
+
     </div>
   );
 }

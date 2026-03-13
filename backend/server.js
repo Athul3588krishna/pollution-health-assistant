@@ -3,24 +3,32 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const dotenv = require('dotenv');
 const authMiddleware = require('./middleware/auth');
+const chatRoutes = require('./routes/chat');   // FIXED
 
 dotenv.config();
 
-const app = express();
+const app = express();   // app first create cheyyanam
 
 // Middleware
 app.use(cors({
   origin: process.env.CLIENT_URL || 'http://localhost:3000',
   credentials: true
 }));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Chatbot Route
+app.use("/api/chat", chatRoutes);   // moved after app created
+
 // MongoDB Connection
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/pollution-health-db', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
+mongoose.connect(
+  process.env.MONGODB_URI || 'mongodb://localhost:27017/pollution-health-db',
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  }
+)
 .then(() => console.log('✅ MongoDB Connected Successfully'))
 .catch((err) => console.error('❌ MongoDB Connection Error:', err));
 
@@ -40,9 +48,9 @@ app.get('/api/health-check', (req, res) => {
 // Error handling middleware
 app.use((err, req, res, next) => {
   console.error(err.stack);
-  res.status(500).json({ 
-    error: 'Something went wrong!', 
-    message: err.message 
+  res.status(500).json({
+    error: 'Something went wrong!',
+    message: err.message
   });
 });
 
