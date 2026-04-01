@@ -20,6 +20,8 @@ router.get('/conditions', (req, res) => {
         { value: 'smoker', label: 'Smoker' },
         { value: 'ex-smoker', label: 'Ex-Smoker' }
       ]
+
+      
     }
   });
 });
